@@ -7,11 +7,10 @@
 > 提示：官方仓库 README 使用 `openclaw` CLI。若你的环境仍是 `clawdbot` CLI，请将下方命令中的 `openclaw` 替换为 `clawdbot`。
 
 1. 安装 Node.js（要求版本 >= 22）。
-   - Windows 建议在 WSL2 环境使用。
-2. 全局安装 CLI（任选其一）：
-   - `npm install -g openclaw@latest`
-   - `pnpm add -g openclaw@latest`
-   - `bun add -g openclaw@latest`
+   - Windows 推荐在 WSL2 环境中运行（原生 Windows 兼容性较差）。
+2. 安装 CLI（推荐使用官方安装脚本）：
+   - Linux/WSL2：`curl -fsSL https://openclaw.bot/install.sh | bash`
+   - Windows PowerShell：`iwr -useb https://openclaw.ai/install.ps1 | iex`
 3. 初始化配置（生成配置文件）：
    - `openclaw onboard --install-daemon`（推荐，含守护进程）
    - 或 `openclaw onboard`
@@ -49,6 +48,21 @@
 3. 按提示填写 Base URL、模型 ID、别名、thinking 等级、API key。
 4. 如需兼容 `openai-responses` 的 replay，可在提示时选择应用补丁。
 5. 重启 Clawdbot（示例：`pm2 restart "clawdbot"`）。
+
+## 后台稳定运行（守护进程）
+
+仓库新增 `clawdbot-daemon-setup.ps1`，用于安装并启动 Gateway 服务，确保 Clawdbot 稳定后台运行：
+
+1. 运行脚本（PowerShell）：
+   - `./clawdbot-daemon-setup.ps1`
+2. 按提示选择：
+   - 运行 `onboard --install-daemon`（推荐）
+   - 或直接 `gateway install` → `gateway start`
+3. 检查状态：
+   - `openclaw gateway status`（或 `clawdbot gateway status`）
+
+Linux/WSL2 注意：若退出登录后服务停止，请执行：
+`sudo loginctl enable-linger $USER`
 
 ## 注意事项
 
